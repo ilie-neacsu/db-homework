@@ -6,4 +6,6 @@ public class TestConfiguration {
     public static final long  WAIT_DURATION_MS = 200;
     public static final boolean START_WITH_PING = true;
     public static final boolean START_WITH_PONG = false;
+    public static final String MESSAGE_PING = "ping";
+    public static final String MESSAGE_PONG = "pong";
 }

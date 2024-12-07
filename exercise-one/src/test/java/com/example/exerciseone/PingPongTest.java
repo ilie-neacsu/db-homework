@@ -1,29 +1,9 @@
 package com.example.exerciseone;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-
-public class PingPongTest {
-
-    private PrintStream originalOut;
-    private ByteArrayOutputStream testOut;
-
-    @BeforeEach
-    public void setUp() {
-        originalOut = System.out;
-        testOut = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(testOut));
-    }
-
-    @AfterEach
-    public void tearDown() {
-        System.setOut(originalOut);
-    }
+public class PingPongTest extends BaseOutputTest {
 
     @Test
     public void testStartWithPing() {
