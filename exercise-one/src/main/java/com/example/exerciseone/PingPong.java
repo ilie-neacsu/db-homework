@@ -4,7 +4,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class PingPong {
+public class PingPong implements AutoCloseable {
 
     public static class PingPongState {
         final ReentrantLock lock = new ReentrantLock();
@@ -30,7 +30,6 @@ public class PingPong {
     }
 
     public void start(long executionMillis) {
-        
         state.running.set(true);
         pingThread.start();
         pongThread.start();
@@ -68,5 +67,10 @@ public class PingPong {
             pingThread.interrupt();
             pongThread.interrupt();
         }
+    }
+
+    @Override
+    public void close() {
+        stop();
     }
 }
