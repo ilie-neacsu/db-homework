@@ -39,6 +39,7 @@ public class PingPong {
             Thread.sleep(executionMillis);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
+            // Ensure cleanup of ping-pong threads when interrupted
             stop();
             return;
         }
@@ -63,6 +64,7 @@ public class PingPong {
             pongThread.join();
         } catch (InterruptedException ex) {
             Thread.currentThread().interrupt();
+            // Force interrupt of ping-pong threads to ensure they stop
             pingThread.interrupt();
             pongThread.interrupt();
             return;
