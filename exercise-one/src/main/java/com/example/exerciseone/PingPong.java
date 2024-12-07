@@ -20,19 +20,18 @@ public class PingPong {
 
     private final PingPongState state;
 
-    private Thread pingThread;
-    private Thread pongThread;
+    private final Thread pingThread;
+    private final Thread pongThread;
 
     public PingPong(boolean startWithPing) {
         this.state = new PingPongState(startWithPing);
+        this.pingThread = new Thread(new PingWorker(state), Configuration.THREAD_NAME_PING);
+        this.pongThread = new Thread(new PongWorker(state), Configuration.THREAD_NAME_PONG);
     }
 
     public void start(long executionMillis) {
+        
         state.running.set(true);
-
-        pingThread = new Thread(new PingWorker(state), Configuration.THREAD_NAME_PING);
-        pongThread = new Thread(new PongWorker(state), Configuration.THREAD_NAME_PONG);
-
         pingThread.start();
         pongThread.start();
 
@@ -40,12 +39,15 @@ public class PingPong {
             Thread.sleep(executionMillis);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
+            stop();
+            return;
         }
 
         stop();
     }
 
     public void stop() {
+
         state.running.set(false);
         state.lock.lock();
 
@@ -57,16 +59,13 @@ public class PingPong {
         }
 
         try {
-            if (pingThread != null) {
-               pingThread.join();
-            }
-
-            if (pongThread != null) {
-                pongThread.join();
-            }
-
+            pingThread.join();
+            pongThread.join();
         } catch (InterruptedException ex) {
             Thread.currentThread().interrupt();
+            pingThread.interrupt();
+            pongThread.interrupt();
+            return;
         }
     }
 }
