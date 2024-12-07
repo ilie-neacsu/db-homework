@@ -1,4 +1,4 @@
-## Exercise One Prompt
+# Exercise One Prompt
 
 2 threads ping-pong. One thread prints 'ping', another one prints 'pong'. Stop after 5 seconds.
 

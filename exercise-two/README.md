@@ -1,4 +1,4 @@
-## Exercise Two Prompt
+# Exercise Two Prompt
 
 There is an array `A` consisting of `N` integers. What is the maximum sum of two integers from `A` that share their first and last digits? For example, `1007` and `167` share their first (`1`) and last (`7`) digits, whereas `2002` and `55` do not.
 
