@@ -67,7 +67,6 @@ public class PingPong {
             // Force interrupt of ping-pong threads to ensure they stop
             pingThread.interrupt();
             pongThread.interrupt();
-            return;
         }
     }
 }

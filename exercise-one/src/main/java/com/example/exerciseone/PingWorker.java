@@ -28,7 +28,9 @@ public class PingWorker implements Runnable {
 
             } catch (InterruptedException ex) {
                 Thread.currentThread().interrupt();
-                return;
+                // Reset the state and signal the other thread to prevent deadlock
+                state.pingTurn = false; // Set to false (opposite of  PongWorker)
+                state.pongCondition.signalAll();
             } finally {
                 state.lock.unlock();
             }

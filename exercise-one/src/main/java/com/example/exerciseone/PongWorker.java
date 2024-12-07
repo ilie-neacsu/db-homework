@@ -10,8 +10,10 @@ public class PongWorker implements Runnable {
 
     @Override
     public void run() {
+
         while (state.running.get()) {
             state.lock.lock();
+
             try {
 
                 while (state.pingTurn && state.running.get()) {
@@ -28,7 +30,9 @@ public class PongWorker implements Runnable {
 
             } catch (InterruptedException ex) {
                 Thread.currentThread().interrupt();
-                return;
+                // Reset the state and signal the other thread to prevent deadlock
+                state.pingTurn = true; // Set to false (opposite of  PingWorker)
+                state.pongCondition.signalAll();
             } finally {
                 state.lock.unlock();
             }
