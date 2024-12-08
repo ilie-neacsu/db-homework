@@ -11,10 +11,10 @@ public class PingPong implements AutoCloseable {
 
     public static class PingPongState {
         
-        final ReentrantLock lock = new ReentrantLock();
-        final Condition pingCondition = lock.newCondition();
-        final Condition pongCondition = lock.newCondition();
-        final AtomicBoolean running = new AtomicBoolean(false);
+        ReentrantLock lock = new ReentrantLock();
+        Condition pingCondition = lock.newCondition();
+        Condition pongCondition = lock.newCondition();
+        AtomicBoolean running = new AtomicBoolean(false);
         boolean pingTurn;
 
         public PingPongState(boolean startWithPing) {

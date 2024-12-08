@@ -33,7 +33,8 @@ public class PongWorker implements Runnable {
 
             } catch (InterruptedException interruptedException) {
 
-                Thread.currentThread().interrupt();
+                Thread currentThread = Thread.currentThread();
+                currentThread.interrupt();
                 log.warn("{} interrupted", Configuration.THREAD_NAME_PONG, interruptedException);
                 
                 // Reset the state and signal the other thread to prevent deadlock
