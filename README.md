@@ -49,7 +49,7 @@ mvn -pl exercise-one exec:java -Dexec.mainClass="com.example.exerciseone.Main"
 
 For more details, see [Exercise One README](exercise-one/README.md)
 
-### Exercise Two: Number Pair Matching
+### Exercise Two
 
 This exercise implements an algorithm to find the maximum sum of two numbers that share their first and last digits.
 

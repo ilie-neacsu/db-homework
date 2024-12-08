@@ -31,7 +31,7 @@ that, given an array `A` consisting of `N` integers, returns the maximum sum of 
 4. **Input:** `A = [30, 909, 3190, 99, 3990, 9009]`  
    **Output:** `9918`
 
-## Algorithm Explanation
+## Implementation Details
 
 The algorithm aims to find the maximum sum of two integers from an array that share their first and last digits. Here's a step-by-step explanation of how the algorithm works:
 
@@ -65,7 +65,7 @@ The algorithm aims to find the maximum sum of two integers from an array that sh
 
 - **O(U)**: The space complexity is determined by the number of unique first and last digit pairs, denoted as `U`. In the worst case, `U` can be at most 100 (10 possible first digits * 10 possible last digits). Therefore, the space complexity is constant, O(1), with respect to the input size.
 
-## Compile and Run
+## Compile, Run and Test
 
 ### Compile
 
