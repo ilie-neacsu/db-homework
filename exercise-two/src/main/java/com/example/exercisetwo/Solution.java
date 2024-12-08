@@ -3,7 +3,9 @@ package com.example.exercisetwo;
 import java.util.HashMap;
 import java.util.Map;
 
-class Solution {
+public class Solution {
+
+    private static final int MIN_VALUE = -1;
 
     private record DigitPair(int firstDigit, int lastDigit) {}
 
@@ -11,14 +13,16 @@ class Solution {
 
         Map<DigitPair, Integer[]> digitMap = new HashMap<>();
 
-        for (int number : array) {
+        for (int number: array) {
+
+            if(number < 0) continue; // Skip negative numbers
 
             int lastDigit = getLastDigit(number);
             int firstDigit = getFirstDigit(number);
 
             DigitPair key = new DigitPair(firstDigit, lastDigit);
 
-            Integer[] topNumbers = digitMap.getOrDefault(key, new Integer[] { Integer.MIN_VALUE, Integer.MIN_VALUE });
+            Integer[] topNumbers = digitMap.getOrDefault(key, new Integer[] { MIN_VALUE, MIN_VALUE });
 
             if(number > topNumbers[0]) {
                 topNumbers[1] = topNumbers[0];
@@ -30,10 +34,10 @@ class Solution {
             digitMap.put(key, topNumbers);
         }
 
-        int maxSum = Integer.MIN_VALUE;
+        int maxSum = MIN_VALUE;
 
         for (Integer[] topNumbers : digitMap.values()) {
-            if (topNumbers[1] > Integer.MIN_VALUE) {
+            if (topNumbers[1] > MIN_VALUE) {
                 int sum = topNumbers[0] + topNumbers[1];
                 if (sum > maxSum) {
                     maxSum = sum;
@@ -45,7 +49,6 @@ class Solution {
     }
 
     private int getFirstDigit(int number) {
-        number = Math.abs(number);
         while (number >= 10) {
             number /= 10;
         }
@@ -53,7 +56,7 @@ class Solution {
     }
 
     private int getLastDigit(int number) {
-        return Math.abs(number) % 10;
+        return number % 10;
     }
 }
 
