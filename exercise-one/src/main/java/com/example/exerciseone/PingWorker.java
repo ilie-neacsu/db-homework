@@ -1,5 +1,8 @@
 package com.example.exerciseone;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class PingWorker implements Runnable {
 
     private final PingPong.PingPongState state;
@@ -26,14 +29,28 @@ public class PingWorker implements Runnable {
                 state.pingTurn = false;
                 state.pongCondition.signalAll();
 
-            } catch (InterruptedException ex) {
+            } catch (InterruptedException interruptedException) {
+
                 Thread.currentThread().interrupt();
+                log.warn("{} interrupted", Configuration.THREAD_NAME_PING, interruptedException);
+
                 // Reset the state and signal the other thread to prevent deadlock
-                state.pingTurn = false; // Set to false (opposite of  PongWorker)
+                state.pingTurn = false;
                 state.pongCondition.signalAll();
+
+            } catch(Exception exception) {
+
+                log.error("Unexpected exception in {}", Configuration.THREAD_NAME_PING, exception);
+                // Stop running and perform cleanup
+                state.running.set(false);
+                state.pingCondition.signalAll();
+                state.pongCondition.signalAll();
+                
             } finally {
                 state.lock.unlock();
             }
         }
+
+        log.debug("{} stopped", Configuration.THREAD_NAME_PING);
     }
 }

@@ -6,27 +6,27 @@ import org.junit.jupiter.api.Test;
 public class PingPongTest extends BaseOutputTest {
 
     @Test
-    public void testStartWithPing() {
+    public void orchestratorShouldBeAbleToStartWithPingWorker() {
         try (PingPong pingPong = new PingPong(TestConfiguration.START_WITH_PING)) {
-            pingPong.start(TestConfiguration.EXECUTION_DURATION_MS_LONG);
+            pingPong.startup(TestConfiguration.EXECUTION_DURATION_MS_LONG);
             String result = testOut.toString().trim();
             Assertions.assertTrue(result.startsWith("ping"), "Should start with ping.");
         }
     }
 
     @Test
-    public void testStartWithPong() {
+    public void orchestratorShouldBeAbleToStartWithPongWorker() {
         try (PingPong pingPong = new PingPong(TestConfiguration.START_WITH_PONG)) {
-            pingPong.start(TestConfiguration.EXECUTION_DURATION_MS_LONG);
+            pingPong.startup(TestConfiguration.EXECUTION_DURATION_MS_LONG);
             String result = testOut.toString().trim();
             Assertions.assertTrue(result.startsWith("pong"), "Should start with pong.");
         }
     }
 
     @Test
-    public void testPingPongAlternation() {
+    public void workersShouldOutputAnPingAndPongInAlternation() {
         try (PingPong ping = new PingPong(true)) {
-            ping.start(TestConfiguration.EXECUTION_DURATION_MS_LONG);
+            ping.startup(TestConfiguration.EXECUTION_DURATION_MS_LONG);
             String result = testOut.toString().trim();
 
             Assertions.assertFalse(result.isEmpty(), "Output should not be empty.");
@@ -43,9 +43,9 @@ public class PingPongTest extends BaseOutputTest {
     }
 
     @Test
-    public void testStopping() {
+    public void orchestratorShouldBeAbleToStopWorkersWhenExecutionDurationPasses() {
         try (PingPong pingPong = new PingPong(true)) {
-            pingPong.start(TestConfiguration.EXECUTION_DURATION_MS_SHORT);
+            pingPong.startup(TestConfiguration.EXECUTION_DURATION_MS_SHORT);
 
         String result = testOut.toString().trim();
 
